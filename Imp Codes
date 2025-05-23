@@ -1,0 +1,279 @@
+1)Waiting for url to get and assert:
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSecondss));
+			ExpectedCondition<Boolean> urlMatches = webDriver -> webDriver.getCurrentUrl().equals(properties.getProperty("homeurl"));
+			wait.until(urlMatches);
+
+2)Javascript executor:
+WebElement elementToClick = driver.findElement(emp.getEmpconf());     
+       JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;        
+ jsExecutor.executeScript("arguments[0].click();", elementToClick);
+
+
+
+3)Action class clicking:
+WebElement element = driver.findElement(customerPageObjects.editbutton());
+			Actions actions = new Actions(driver);
+			actions.moveToElement(element).click().build().perform();
+
+
+4)Forcefully clearing the text from field:
+   
+		WebElement deletename = driver.findElement(Hq.hqfirstname());
+		String s = Keys.chord(Keys.CONTROL, "a");
+		deletename.sendKeys(s);
+		deletename.sendKeys(Keys.DELETE);
+		deletename.sendKeys("Hello");
+
+
+5)Explicit wait:
+   int timeoutInSecondss = 60;
+   WebDriverWait waitt = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSecondss));
+   WebElement click=waitt.until(ExpectedConditions.elementToBeClickable(driver.findElement(customerPageObjects.editbuttonpage())));
+			click.click();
+
+
+
+6)Declaring global string to access from different method :
+        
+        String name3 = "";
+	@Then("i create one user")
+	{
+		String name = RandomStringUtils.randomAlphabetic(4);
+		String name2 = name + "@gmail.com";
+		driver.findElement(Hq.hqemail()).sendKeys(name2);
+		name3 = name2.toLowerCase();
+		System.out.println(name2);
+}
+
+
+
+7)Uploading image:
+
+			String filePath1 = "D:\\Projects\\CSP\\contentserviceplatform\\src\\main\\resources\\FoodDemo.png";
+
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(filePath1), null);
+			Robot robot1 = new Robot();
+			robot1.keyPress(KeyEvent.VK_CONTROL);
+			robot1.keyPress(KeyEvent.VK_V);
+			robot1.keyRelease(KeyEvent.VK_V);
+			robot1.keyRelease(KeyEvent.VK_CONTROL);
+			robot1.keyPress(KeyEvent.VK_ENTER);
+			robot1.keyRelease(KeyEvent.VK_ENTER);
+
+8)To perform certain action four times:
+    for (int i = 0; i < 4; i++) {
+            WebElement departmentNameInput = driver.findElement(By.id("departmentNameInputId")); 
+            departmentNameInput.sendKeys("Department " + (i + 1)); 
+            WebElement submitButton = driver.findElement(By.id("submitButtonId"));
+            submitButton.click();
+
+        }
+
+9)Switching to new window :
+  // Open the main window
+        driver.get("https://www.example.com");
+
+        // Perform actions in the main window
+
+        // Open a new window (or tab)
+        ((JavascriptExecutor) driver).executeScript("window.open('https://www.example.com/newpage', '_blank');");
+
+        // Get handles of all open windows
+        Set<String> windowHandles = driver.getWindowHandles();
+
+        // Switch to the new window
+        for (String windowHandle : windowHandles) {
+            if (!windowHandle.equals(driver.getWindowHandle())) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        // Perform actions in the new window
+
+        // Close the new window
+        driver.close();
+
+        // Switch back to the main window
+        driver.switchTo().window(originalWindowHandle);
+
+        // Perform actions in the main window
+
+        // Close the main window
+        driver.quit();
+
+10)To print list from the table:
+//		List<WebElement> rows = driver.findElements(By.xpath("//div[@class='MuiDataGrid-virtualScrollerContent css-0']"));
+//
+//		for (WebElement row : rows) {
+//		    System.out.println(row.getText());
+
+
+11)		for (WebElement row : rows) {
+			String actualValue = row.getText();
+			actualValue.split(" ");
+			Assert.assertEquals(actualValue, tagname);
+		}	
+		}
+	
+12)WebElement Country_dropdown=driver.findElement(By.xpath("(//div[@class=\"MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6\"])[1]"));
+	Country_dropdown.click();
+	List<WebElement>countrylist1 = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//li[contains(text(),\"India\")]")));
+	String desiredText="India";	
+	for(WebElement Country : countrylist1 ) {
+		String countries = Country.getText();
+		if(countries.equals(desiredText)) {
+			Country.click();	
+		}
+		else {
+			System.out.println("Country doesn't exist  : " );
+		}
+			}
+
+13)	
+//		List<WebElement> rows = driver.findElements(By.xpath(
+//				"//div[@class='MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper MuiMenu-paper MuiMenu-paper css-pwxzbm']"));
+//				
+//		List<String> tagList = new ArrayList<>();
+//		for (WebElement row : rows) {
+//
+//			String actualValue = row.getText();
+//			String[] demo = actualValue.split(" ");
+//			tagList.addAll(Arrays.asList(demo));
+//		}
+//
+//		System.out.println(tagname+" this is tag name");
+//		System.out.println(tagList+ "this is the full tag list");
+//Thread.sleep(2000);
+//		tagList.stream().forEach(n ->
+//		{
+//			
+//		    if (n.equalsIgnoreCase(tagname)) {
+//		        Assert.assertEquals(n, tagname);
+//		    }
+//		    else
+//		    {System.out.println(tagname+ " Tag with this name is not present");}
+//		}
+//		);
+
+14)public void loginWithId(String id) {
+    try {
+        WebElement un = driver.findElement(By.id("outlined-required"));
+        un.clear();
+        un.sendKeys(id);
+
+        WebElement login = driver.findElement(By.xpath("//button[@type='submit']"));
+        login.click();
+
+        while (un.isDisplayed()) {
+            un.clear();
+            un.sendKeys(id);
+            login.click();
+            System.out.println("while clicked");
+        }
+    } catch (Exception e) {
+        System.out.println("already clicked");
+    }
+}
+
+// To use the method with different IDs
+loginWithId("id1");
+loginWithId("id2");
+// Add more calls as needed
+
+15)//		wait = new FluentWait<>(driver)
+//
+//				.withTimeout(Duration.ofSeconds(2l)).pollingEvery(Duration.ofMillis(700l))
+//				.ignoring(NoSuchElementException.class);
+//		String Name = RandomStringUtils.randomAlphabetic(2);
+//		List<WebElement> Count = driver.findElements(customer.getCountryDropDownElements());
+//		for (int i = 0; i < Count.size(); i++) {
+//			WebElement element = Count.get(i);
+//			String list1 = element.getText();
+//			if (list1.contains("India(+91)")) {
+//				element.click();
+//			}
+//		}
+
+16)To mminimise window: //windowMinimize(4);
+
+17)user.sendKeys(Keys.BACK_SPACE);
+		user.sendKeys("m");
+
+18)//div[@class='MuiGrid-root MuiGrid-item css-1fewfzn-MuiGrid-root']//div[5]/child::*[last()] (for the last element in div's)
+
+19)List<WebElement> deleteButtons = driver.findElements(Hq.bannerdeletebutton());
+ 
+		if (!deleteButtons.isEmpty() && deleteButtons.get(0).isDisplayed()) {
+			deleteButtons.get(0).click();
+ 
+			Hq.Bannervalidationcode();
+ 
+		} else {
+ 
+			Hq.Bannervalidationcode();
+ 
+		}
+
+20) For svg child element: //*[name()='svg'][1]
+21)For traversing form child to child //p[contains(text() ,'Auto Field1')]/following-sibling::p[1]
+
+
+22)import java.util.HashMap;
+
+public class LoginSimulation {
+    public static void main(String[] args) {
+        HashMap<String, String> credentials = new HashMap<>();
+        credentials.put("user1", "password1");
+        credentials.put("user2", "password2");
+
+        String username = "user1";
+        String password = "password1";
+
+        if (credentials.containsKey(username) && credentials.get(username).equals(password)) {
+            System.out.println("Login successful!");
+        } else {
+            System.out.println("Invalid credentials.");
+        }
+    }
+}
+
+23)import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.NoSuchElementException;
+
+public class HandleExceptions {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.get("https://example.com");
+            WebElement element = driver.findElement(By.id("nonexistent"));
+            element.click();
+        } catch (NoSuchElementException e) {
+            System.out.println("Element not found: " + e.getMessage());
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+24)import java.util.HashSet;
+
+public class FindDuplicates {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 2, 5, 1};
+        HashSet<Integer> seen = new HashSet<>();
+        HashSet<Integer> duplicates = new HashSet<>();
+
+        for (int num : array) {
+            if (!seen.add(num)) {
+                duplicates.add(num);
+            }
+        }
+
+        System.out.println("Duplicates: " + duplicates);
+    }
+}
+
