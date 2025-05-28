@@ -276,4 +276,23 @@ public class FindDuplicates {
         System.out.println("Duplicates: " + duplicates);
     }
 }
+25)//for minimizing the window or zooming out and can call with method like **windowMinimize(int num)**
+public void windowMinimize(int num) throws Exception {
+		Robot r = new Robot();
 
+		for (int i = 0; i < num; i++) {
+			r.keyPress(KeyEvent.VK_CONTROL);
+			r.keyPress(KeyEvent.VK_MINUS);
+			r.keyRelease(KeyEvent.VK_CONTROL);
+			r.keyRelease(KeyEvent.VK_MINUS);
+		}
+	}
+
+26)//to reset the zoomed  out window and can call with method like **resetZoomToDefault(int num)**
+public void resetZoomToDefault() throws Exception {
+	    Robot r = new Robot();
+	    r.keyPress(KeyEvent.VK_CONTROL);
+	    r.keyPress(KeyEvent.VK_0);
+	    r.keyRelease(KeyEvent.VK_0);
+	    r.keyRelease(KeyEvent.VK_CONTROL);
+	}
